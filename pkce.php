@@ -4,7 +4,10 @@
 		<title>PKCE Generator</title>
 
 		<style>
-
+			.inputlength
+			{
+				width: 100em;
+			}
 		</style>
 
 		<script>
@@ -62,12 +65,26 @@
 	</head>
 
 	<body>
-		1. Generate a Code Verifier. <br />
-		<input id="txtVerifier" name="txtVerifier" maxlength="128" style="width:500px" readonly/>
-		<br />
-		<button type="button" onclick="pkcegen.genVerifier();">Generate</button>
-		<br />
-		<textarea cols="30" rows="10" id="txt"></textarea>
-		
+		<?php
+			$PKCE = "";
+
+			if (sizeof($_POST) > 0) 
+			{echo print_r($_POST);
+				$hash = hash("sha256", $_POST["txtVerifier"]);
+				$hash = base64_encode($hash);
+				$hash = strtr($hash, '+/', '-_');
+				$hash = rtrim($hash, '=');
+				$PKCE = $hash;	
+						
+			}
+		?>		
+		<form method="POST">
+			1. Generate a Code Verifier. <button type="button" onclick="pkcegen.genVerifier();">Generate</button><br />
+			<input id="txtVerifier" name="txtVerifier" maxlength="128" class="inputlength" />
+			<br />		
+
+			2. Generate PKCE <button>Generate</button><br />
+			<textarea class="inputlength" rows="10" id="txtPKCE"><?php echo $PKCE;?></textarea>
+		</form>
 	</body>
 </html>
