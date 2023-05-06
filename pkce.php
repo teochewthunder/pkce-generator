@@ -71,7 +71,7 @@
 			if (sizeof($_POST) > 0) 
 			{echo print_r($_POST);
 				$hash = hash("sha256", $_POST["txtVerifier"]);
-				$hash = base64_encode($hash);
+				$hash = base64_encode(pack('H*', $hash));
 				$hash = strtr($hash, '+/', '-_');
 				$hash = rtrim($hash, '=');
 				$PKCE = $hash;	
