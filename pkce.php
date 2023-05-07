@@ -36,7 +36,7 @@
 				},
 				genVerifierValidChar: function()
 				{
-					var index = this.randomNumber(0, 20);
+					var index = this.randomNumber(0, 50);
 
 					switch(index)
 					{
@@ -66,25 +66,29 @@
 
 	<body>
 		<?php
-			$PKCE = "";
+			$verifier="";
+			$challenge = "";
 
 			if (sizeof($_POST) > 0) 
-			{echo print_r($_POST);
-				$hash = hash("sha256", $_POST["txtVerifier"]);
-				$hash = base64_encode(pack('H*', $hash));
-				$hash = strtr($hash, '+/', '-_');
-				$hash = rtrim($hash, '=');
-				$PKCE = $hash;	
-						
+			{
+				$verifier = $_POST["txtVerifier"];
+				$hash = hash("sha256", $verifier);
+				$challenge = base64_encode(pack("H*", $hash));
+				$challenge = strtr($challenge, "+/", "-_");
+				$challenge = rtrim($challenge, "=");
+				$challenge = $hash;			
 			}
 		?>		
-		<form method="POST">
-			1. Generate a Code Verifier. <button type="button" onclick="pkcegen.genVerifier();">Generate</button><br />
-			<input id="txtVerifier" name="txtVerifier" maxlength="128" class="inputlength" />
-			<br />		
-
-			2. Generate PKCE <button>Generate</button><br />
-			<textarea class="inputlength" rows="10" id="txtPKCE"><?php echo $PKCE;?></textarea>
-		</form>
+		<fieldset>
+			<legend>PKCE Generator</legend>
+			<form method="POST">
+				1. Generate a Code Verifier. <button type="button" onclick="pkcegen.genVerifier();">Generate</button><br />
+				<input id="txtVerifier" name="txtVerifier" maxlength="128" class="inputlength" value="<?php echo $verifier;?>" />
+				<br />		
+				<br />
+				2. Generate Code Challenge. <button>Generate</button><br />
+				<input class="inputlength" id="txtChallenge" value="<?php echo $challenge;?>" />
+			</form>			
+		</fieldset>
 	</body>
 </html>
