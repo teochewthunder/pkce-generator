@@ -16,19 +16,12 @@
 				{
 					var strLength = this.randomNumber(43, 128);
 					var verifier = "";
-					var lastChar = "";
 
 					for(let i = 0; i < strLength; i++) 
 					{
 						var currentChar;
+						currentChar = this.genVerifierValidChar();
 
-						do 
-						{
-							currentChar = this.genVerifierValidChar();
-						}
-						while(currentChar == lastChar)
-
-						lastChar = currentChar;
 						verifier = verifier + currentChar;
 					}
 
@@ -48,8 +41,8 @@
 							var letterIndex = this.randomNumber(0, 3);
 							switch(letterIndex)
 							{
-								case 0: return String.fromCharCode(this.randomNumber(48, 57)); break; //48-57
-								case 1: return String.fromCharCode(this.randomNumber(65, 90)); break; //65-90
+								case 0: return String.fromCharCode(this.randomNumber(48, 57)); break; 
+								case 1: return String.fromCharCode(this.randomNumber(65, 90)); break; 
 								default: return String.fromCharCode(this.randomNumber(97, 122)); break;
 							}
 							break;
