@@ -68,8 +68,7 @@
 				$hash = hash("sha256", $verifier);
 				$challenge = base64_encode(pack("H*", $hash));
 				$challenge = strtr($challenge, "+/", "-_");
-				$challenge = rtrim($challenge, "=");
-				$challenge = $hash;			
+				$challenge = rtrim($challenge, "=");		
 			}
 		?>		
 		<fieldset>
